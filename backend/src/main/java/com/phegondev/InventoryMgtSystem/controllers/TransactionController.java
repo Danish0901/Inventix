@@ -63,6 +63,4 @@ public class TransactionController {
 
         return ResponseEntity.ok(transactionService.updateTransactionStatus(transactionId, status));
     }
-
-
 }
