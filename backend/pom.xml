@@ -8,11 +8,11 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.phegondev</groupId>
+	<groupId>com.springbootproject</groupId>
 	<artifactId>InventoryMgtSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>InventoryMgtSystem</name>
-	<description>Demo project for Spring Boot</description>
+	<description>project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -48,14 +48,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+    		<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+
+    		<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -108,14 +109,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
+				<!-- <configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-				</configuration>
+				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>

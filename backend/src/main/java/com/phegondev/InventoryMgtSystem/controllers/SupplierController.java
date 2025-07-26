@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SupplierController {
 
-    private final SupplierService supplierService;
+    private SupplierService supplierService;
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
