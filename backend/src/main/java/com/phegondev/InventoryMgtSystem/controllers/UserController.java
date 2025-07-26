@@ -49,8 +49,4 @@ public class UserController {
     public ResponseEntity<User> getCurrentUser(){
         return ResponseEntity.ok(userService.getCurrentLoggedInUser());
     }
-
-
-
-
 }

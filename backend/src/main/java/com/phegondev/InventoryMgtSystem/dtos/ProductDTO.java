@@ -35,6 +35,5 @@ public class ProductDTO {
     private String imageUrl;
 
     private LocalDateTime createdAt;
-
-
+    
 }
