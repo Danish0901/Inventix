@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private ProductService productService;
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
