@@ -23,3 +23,6 @@
 hs_err_pid*
 replay_pid*
 .DS_Store
+
+# Ignore application.properties
+backend/src/main/resources/application.properties
