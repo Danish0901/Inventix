@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.danish.Inventixx.InventoryMgtSystemApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.03 s -- in com.danish.Inventixx.InventoryMgtSystemApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.53 s -- in com.danish.Inventixx.InventoryMgtSystemApplicationTests

@@ -102,10 +102,10 @@
         </dependency>
 
         <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-            <version>2.29.6</version>
-        </dependency>
+    		<groupId>software.amazon.awssdk</groupId>
+    		<artifactId>s3</artifactId>
+			<version>2.25.28</version>
+		</dependency>
     </dependencies>
 
     <build>

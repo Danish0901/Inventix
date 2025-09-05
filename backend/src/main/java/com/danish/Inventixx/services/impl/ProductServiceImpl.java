@@ -1,10 +1,14 @@
 package com.danish.Inventixx.services.impl;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +27,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,11 +37,10 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
+    private final S3Client s3Client;
 
-    private static final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-images/";
-
-   
-    private static final String IMAGE_DIRECTORY_2 = "/Users/dennismac/phegonDev/ims-react/public/products/";
+     @Value("${aws.bucket.name}")
+    private String bucketName;
 
     @Override
     public Response saveProduct(ProductDTO productDTO, MultipartFile imageFile) {
@@ -178,52 +183,25 @@ public class ProductServiceImpl implements ProductService {
 
     private String saveImage(MultipartFile imageFile) {
         if (!imageFile.getContentType().startsWith("image/") || imageFile.getSize() > 1024 * 1024 * 1024) {
-            throw new IllegalArgumentException("Only image files under 1GIG is allowed");
+            throw new IllegalArgumentException("Only image files under 1GB are allowed");
         }
 
-        File directory = new File(IMAGE_DIRECTORY);
-
-        if (!directory.exists()) {
-            directory.mkdir();
-            log.info("Directory was created");
-        }
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
-        String imagePath = IMAGE_DIRECTORY + uniqueFileName;
-
         try {
-            File destinationFile = new File(imagePath);
-            imageFile.transferTo(destinationFile); 
+            s3Client.putObject(
+                 PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(uniqueFileName)
+                    .contentType(imageFile.getContentType())
+                    .build(),
+                RequestBody.fromInputStream(imageFile.getInputStream(), imageFile.getSize())
+            );
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error saving Image: " + e.getMessage());
-        }
-        return imagePath;
-
+            throw new IllegalArgumentException("Error saving Image to S3: " + e.getMessage());
     }
 
-    private String saveImage2(MultipartFile imageFile) {
-        if (!imageFile.getContentType().startsWith("image/") || imageFile.getSize() > 1024 * 1024 * 1024) {
-            throw new IllegalArgumentException("Only image files under 1GIG is allowed");
-        }
+        return "https://" + bucketName + ".s3." + s3Client.serviceClientConfiguration().region().id() + ".amazonaws.com/" + uniqueFileName;
+}
 
-        File directory = new File(IMAGE_DIRECTORY_2);
-
-        if (!directory.exists()) {
-            directory.mkdir();
-            log.info("Directory was created");
-        }
-        String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-
-        String imagePath = IMAGE_DIRECTORY_2 + uniqueFileName;
-
-        try {
-            File destinationFile = new File(imagePath);
-            imageFile.transferTo(destinationFile); 
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Error saving Image: " + e.getMessage());
-        }
-        return "products/"+uniqueFileName;
-
-
-    }
 }
