@@ -149,18 +149,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Response deleteProduct(Long id) {
+public Response deleteProduct(Long id) {
 
-        productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product Not Found"));
+    Product product = productRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Product Not Found"));
 
-        productRepository.deleteById(id);
-
-        return Response.builder()
-                .status(200)
-                .message("Product Deleted successfully")
-                .build();
+    if (product.getImageUrl() != null && !product.getImageUrl().isBlank()) {
+        try {
+            s3Client.deleteObject(b -> b
+                    .bucket(bucketName)
+                    .key(product.getImageUrl()) 
+            );
+            log.info("Deleted image from S3: {}", product.getImageUrl());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete image from S3: " + e.getMessage(), e);
+        }
     }
+
+    productRepository.deleteById(id);
+
+    return Response.builder()
+            .status(200)
+            .message("Product Deleted successfully")
+            .build();
+}
 
     @Override
     public Response searchProduct(String input) {
@@ -201,7 +213,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Error saving Image to S3: " + e.getMessage());
     }
 
-        return "https://" + bucketName + ".s3." + s3Client.serviceClientConfiguration().region().id() + ".amazonaws.com/" + uniqueFileName;
+        return uniqueFileName;
 }
 
 }
