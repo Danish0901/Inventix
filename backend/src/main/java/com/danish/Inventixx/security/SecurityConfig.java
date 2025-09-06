@@ -50,7 +50,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-    return NoOpPasswordEncoder.getInstance(); // Plain text password support
+    return NoOpPasswordEncoder.getInstance(); 
     }
 
     @Bean

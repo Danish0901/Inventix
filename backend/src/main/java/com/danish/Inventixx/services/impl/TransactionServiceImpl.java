@@ -61,11 +61,9 @@ public class TransactionServiceImpl implements TransactionService {
 
         User user = userService.getCurrentLoggedInUser();
 
-        //update the stock quantity and re-save
         product.setStockQuantity(product.getStockQuantity() + quantity);
         productRepository.save(product);
 
-        //create a transaction
         Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.PURCHASE)
                 .status(TransactionStatus.COMPLETED)
@@ -97,12 +95,9 @@ public class TransactionServiceImpl implements TransactionService {
 
         User user = userService.getCurrentLoggedInUser();
 
-        //update the stock quantity and re-save
         product.setStockQuantity(product.getStockQuantity() - quantity);
         productRepository.save(product);
 
-
-        //create a transaction
         Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.SALE)
                 .status(TransactionStatus.COMPLETED)
@@ -140,12 +135,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         User user = userService.getCurrentLoggedInUser();
 
-        //update the stock quantity and re-save
         product.setStockQuantity(product.getStockQuantity() - quantity);
         productRepository.save(product);
 
 
-        //create a transaction
         Transaction transaction = Transaction.builder()
                 .transactionType(TransactionType.RETURN_TO_SUPPLIER)
                 .status(TransactionStatus.PROCESSING)
@@ -171,7 +164,6 @@ public class TransactionServiceImpl implements TransactionService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
 
-        //user the Transaction specification
         Specification<Transaction> spec = TransactionFilter.byFilter(filter);
         Page<Transaction> transactionPage = transactionRepository.findAll(spec, pageable);
 
