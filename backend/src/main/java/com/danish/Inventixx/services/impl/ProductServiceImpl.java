@@ -198,7 +198,9 @@ public Response deleteProduct(Long id) {
             throw new IllegalArgumentException("Only image files under 1GB are allowed");
         }
 
-        String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+        String originalName = imageFile.getOriginalFilename().replaceAll(" ", "_").replaceAll("[()]", "");
+        String uniqueFileName = UUID.randomUUID() + "_" + originalName;
+
 
         try {
             s3Client.putObject(
