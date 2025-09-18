@@ -1,0 +1,54 @@
+# =========================
+# Maven / Java
+# =========================
+target/
+.mvn/
+**/mvnw
+**/mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+!.mvn/wrapper/maven-wrapper-downloader.jar
+
+# Compiled classes
+*.class
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =========================
+# Node / Frontend
+# =========================
+frontend-vite/node_modules/
+frontend-vite/dist/
+frontend-vite/build/
+
+# Env / sensitive files
+*.env
+backend/.env
+
+# Git
+.git
+.gitignore

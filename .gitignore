@@ -29,8 +29,8 @@ hs_err_pid*
 replay_pid*
 
 # Ignore application.properties
-backend/src/main/resources/application.properties
-backend/target/
+backend/.env
+
 
 # =========================
 # Frontend / Node
