@@ -38,6 +38,8 @@ backend/.env
 
 # Node modules
 node_modules/
+# Ignore all .env files
+frontend-vite/.env*
 
 # Build / dist folders
 dist/

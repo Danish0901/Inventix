@@ -2,7 +2,7 @@ import axios from "axios";
 import CryptoJS from "crypto-js";
 
 export default class ApiService {
-  static BASE_URL = "/api";
+  static BASE_URL = import.meta.env.VITE_API_BASE_URL;
   static ENCRYPTION_KEY = "my-project-inventix";
 
   //encrypt data using cryptoJs
